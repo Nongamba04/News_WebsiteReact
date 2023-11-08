@@ -5,6 +5,7 @@ import style from './style.css'
 import PropTypes from 'prop-types'
 import InfiniteScroll from 'react-infinite-scroll-component'
 import Navbar from './Navbar'
+import App from '../App'
 
 export class News extends Component {
  
@@ -28,7 +29,7 @@ export class News extends Component {
       //Fetch the data from the api
       async componentDidMount(){
         this.props.setProgress(5);
-        let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&q=&apiKey=${this.props.apikey}&page=1&pageSize=12`;
+        let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
         let res = await fetch(url);
         this.props.setProgress(30);
         let parsedData = await res.json();
@@ -45,7 +46,7 @@ export class News extends Component {
 
       async searchNews(){
           this.props.setProgress(5);
-          let url = `https://newsapi.org/v2/everything?q=${this.state.query}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
+          let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
           let res = await fetch(url);
           this.props.setProgress(30);
           let parsedData = await res.json();
@@ -89,7 +90,7 @@ export class News extends Component {
 
       fetchMoreData = async () =>{
         this.setState({page : this.state.page+1, loading: true})
-        let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page}&pageSize=12`;
+        let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
         let res = await fetch(url);
         let parsedData = await res.json();
         this.setState({
@@ -112,8 +113,11 @@ export class News extends Component {
             <InfiniteScroll
               dataLength = {this.state.articles.length}
               next = {this.fetchMoreData}
-              hasMore = {this.state.articles.length !== this.state.totaResults}
+              hasMore = {this.state.articles.length !== this.state.totalResults}
               loader = {<Spinner/>}>
+            
+            {/* {this.state.query}? <App query={this.state.query}/> : <App/> */}
+
             <div className='row'>
                 {this.state.articles.map((element)=>{ 
                 return <div className="col-md-4" key ={element.url}>

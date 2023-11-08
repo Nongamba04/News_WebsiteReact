@@ -2,7 +2,7 @@
   "name": "react-news-app1",
   "version": "0.1.0",
   "private": true,
-  "homepage": "http://Nongamba04.github.io/News_Website_React",
+  "homepage": "http://Nongamba04.github.io/News_WebsiteReact",
   "dependencies": {
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
