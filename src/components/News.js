@@ -29,7 +29,8 @@ export class News extends Component {
       //Fetch the data from the api
       async componentDidMount(){
         this.props.setProgress(5);
-        let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
+        // let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
+        let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&max=15&apikey=${this.props.apikey}&page=1&pageSize=12`;
         let res = await fetch(url);
         this.props.setProgress(30);
         let parsedData = await res.json();
@@ -46,7 +47,8 @@ export class News extends Component {
 
       async searchNews(){
           this.props.setProgress(5);
-          let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
+          // let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=1&pageSize=12`;
+          let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&apikey=${this.props.apikey}&page=1&pageSize=12`;
           let res = await fetch(url);
           this.props.setProgress(30);
           let parsedData = await res.json();
@@ -65,6 +67,7 @@ export class News extends Component {
       // //Previous button
       //  previousClick = async () =>{
       //   let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page - 1}&pageSize=12`;
+      // let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&apikey=${this.props.apikey}&page=${this.state.page - 1}&pageSize=12`;
       //   this.setState({loading : true});
       //   let res = await fetch(url);
       //   let parsedData = await res.json();
@@ -77,7 +80,8 @@ export class News extends Component {
      
       // //Next button
       // nextClick = async ()=>{
-      //   let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
+        // let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
+      // let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&apikey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
       //   this.setState({loading : true});
       //   let res = await fetch(url);
       //   let parsedData = await res.json();
@@ -90,7 +94,8 @@ export class News extends Component {
 
       fetchMoreData = async () =>{
         this.setState({page : this.state.page+1, loading: true})
-        let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
+        // let url = `https://newsapi.org/v2/top-headlines?language=en&category=${this.props.category}&apiKey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
+        let url = `https://gnews.io/api/v4/top-headlines?category=${this.props.category}&lang=en&max=15&apikey=${this.props.apikey}&page=${this.state.page + 1}&pageSize=12`;
         let res = await fetch(url);
         let parsedData = await res.json();
         this.setState({
@@ -114,7 +119,8 @@ export class News extends Component {
               dataLength = {this.state.articles.length}
               next = {this.fetchMoreData}
               hasMore = {this.state.articles.length !== this.state.totalResults}
-              loader = {<Spinner/>}>
+              loader={<Spinner/>}
+              >
             
             {/* {this.state.query}? <App query={this.state.query}/> : <App/> */}
 
@@ -124,7 +130,7 @@ export class News extends Component {
                  <NewsUpdate
                 title={element.title}
                 // description={element.description ? element.description.slice(0, 60) : ''}
-                imgSrc={element.urlToImage}
+                imgSrc={element.image}
                 newsUrl={element.url}
                 brand={element.source.name}
               />
